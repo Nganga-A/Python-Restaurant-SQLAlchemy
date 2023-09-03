@@ -1,17 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from models import Restaurant
 
-Base = declarative_base()
-
-class Restaurant(Base):
-    __tablename__ = 'restaurants'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    price = Column(Integer)
-    reviews = relationship('Review', back_populates='restaurant')
-    customers = relationship('Customer', secondary='reviews', back_populates='restaurants')
-
+class RestaurantMethods:
         # represent the class instances
     def __repr__(self):
         return f'{self.name} Restaurant - Price: ${self.price}.00\n'
