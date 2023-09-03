@@ -1,33 +1,26 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from models import Customer
 
-Base = declarative_base()
-
-class Customer(Base):
-    __tablename__ = 'customers'
-    id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    reviews = relationship('Review', back_populates='customer')
-    restaurants = relationship('Restaurant', secondary='reviews', back_populates='customers')
-    
+class CustomerMethods:
     # represent the class instances
     def __repr__(self):
         return f'{self.id}: {self.last_name}, {self.first_name}\n'
 
+    @property
     def customer_reviews(self):
         # Return a collection of all the reviews that the Customer has left
         return self.reviews
 
+    @property
     def customer_restaurants(self):
         # Return a collection of all the restaurants that the Customer has reviewed
         return self.restaurants
 
+    @property
     def full_name(self):
         # Return the full name of the customer, with the first name and last name concatenated, Western style
         return f"{self.first_name} {self.last_name}"
 
+    @property
     def favorite_restaurant(self):
         # Return the restaurant instance that has the highest star rating from this customer
         reviews = sorted(self.reviews, key=lambda r: r.star_rating, reverse=True)
