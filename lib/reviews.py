@@ -1,18 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from models import Review
 
-Base = declarative_base()
-
-class Review(Base):
-    __tablename__ = 'reviews'
-    id = Column(Integer, primary_key=True)
-    star_rating = Column(Integer)
-    restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
-    customer_id = Column(Integer, ForeignKey('customers.id'))
-    restaurant = relationship('Restaurant', back_populates='reviews')
-    customer = relationship('Customer', back_populates='reviews')
-    
+class ReviewMethods:
     # represent the class instances
     def __repr__(self):
         return (f"Customer({self.customer_id}) | Restaurant({self.restaurant_id}) | start-rating({self.star_rating}) |"
