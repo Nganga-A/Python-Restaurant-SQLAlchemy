@@ -11,7 +11,20 @@ class CustomerMethods:
     @property
     def customer_reviews(self):
         # Return a collection of all the reviews that the Customer has left
-        return self.customer.reviews
+        customer = self.customer
+        reviews = customer.reviews
+        formatted_reviews = []
+
+        for review in reviews:
+            restaurant_name = review.restaurant.name
+            star_rating = review.star_rating
+            review_info = f"Review for {restaurant_name}: {star_rating} stars."
+            formatted_reviews.append(review_info)
+
+        # Combine formatted reviews into a single string with line breaks
+        formatted_reviews_string = '\n'.join(formatted_reviews)
+        return formatted_reviews_string
+
 
     @property
     def customer_restaurants(self):
@@ -25,16 +38,20 @@ class CustomerMethods:
 
     @property
     def favorite_restaurant(self):
-        # Return the restaurant instance that has the highest star rating from this customer
-        reviews = sorted(self.customer.reviews, key=lambda r: r.star_rating, reverse=True)
-        if reviews:
-            return reviews[0].restaurant
+    # Check if the customer has left any reviews
+        if self.customer.reviews:
+        # Sort reviews by star rating in descending order
+            reviews = sorted(self.customer.reviews, key=lambda r: r.star_rating, reverse=True)
+            return reviews[0].restaurant  # Return the restaurant with the highest rating
+        else:
+            return None  # Return None if the customer has not left any reviews
+
 
     def add_review(self, restaurant, rating):
         # Create a new review for the restaurant with the given rating
         new_review = Review(
             restaurant_id=restaurant.id,
-            customer_id=self.id,
+            customer_id=self.customer.id,
             star_rating=rating
         )
         session.add(new_review)
@@ -47,4 +64,4 @@ class CustomerMethods:
         for review in reviews_to_delete:
             session.delete(review)
         session.commit()
-        print(f'{self.first_name}\'s reviews for \'{restaurant.name} restaurant\' have been successfully deleted!')
+        print(f'{self.customer.first_name}\'s reviews for \'{restaurant.name} restaurant\' have been successfully deleted!')

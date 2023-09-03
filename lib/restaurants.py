@@ -1,4 +1,4 @@
-from models import session
+from models import session, Restaurant
 
 class RestaurantMethods:
     def __init__(self, restaurant):
@@ -10,20 +10,45 @@ class RestaurantMethods:
 
     def restaurant_reviews(self):
         # Return a collection of all the reviews for this restaurant
-        return self.restaurant.reviews
+        reviews = self.restaurant.reviews
+        formatted_reviews = []
+            
+        for review in reviews:
+            customer_name = f"{review.customer.first_name} {review.customer.last_name}"
+            review_info = f"Review by {customer_name}: {review.star_rating} stars."
+            formatted_reviews.append(review_info)
+
+        # Combine formatted reviews into a single string with line breaks
+        formatted_reviews_string = '\n'.join(formatted_reviews)
+        return formatted_reviews_string
+
 
     def restaurant_customers(self):
         # Return a collection of all the customers who reviewed the restaurant
-        return self.restaurant.customers
+        customers = self.restaurant.customers
+        formatted_customers = []
+
+        for customer in customers:
+            customer_info = f"{customer.id}: {customer.first_name}, {customer.last_name}"
+            formatted_customers.append(customer_info)
+
+        # Combine formatted customer info into a single string with line breaks
+        formatted_customers_string = '\n' + '\n'.join(formatted_customers)
+        return formatted_customers_string
+
 
     @classmethod
     def fanciest_restaurant(cls):
         # Return the restaurant instance with the highest price
-        return session.query(cls).order_by(cls.restaurant.price.desc()).first()
+        return session.query(Restaurant).order_by(Restaurant.price.desc()).first()
 
     def all_reviews(self):
         # Return a list of strings with all the reviews for this restaurant
         reviews = []
         for review in self.restaurant.reviews:
-            reviews.append(f"Review for {self.restaurant.name} by {review.customer.full_name()}: {review.star_rating} stars.")
-        return reviews
+            restaurant_name = review.restaurant.name
+            customer_name = f"{review.customer.first_name} {review.customer.last_name}"
+            review_info = f"Review for {restaurant_name} Restaurant by {customer_name}: {review.star_rating} stars."
+            reviews.append(review_info)
+        reviews_with_line_breaks = '\n'.join(reviews)
+        return reviews_with_line_breaks

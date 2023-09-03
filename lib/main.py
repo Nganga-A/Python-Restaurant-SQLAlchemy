@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 from models import *
+from restaurants import RestaurantMethods
+from customers import CustomerMethods
+from reviews import ReviewMethods
 
 Base = declarative_base()
 
@@ -13,59 +16,81 @@ if __name__ == '__main__':
     '''----------------------------------- R E T A U R A N T -------------------------------------------'''
     restaurant1 = session.query(Restaurant).first()
 
+    # Create an instance of RestaurantMethods
+    restaurant_methods = RestaurantMethods(restaurant1)
+
     # return details of all the restaurant instance reviews
-    print('\n-------------------- all_reviews()--------------------')
-    print(restaurant1.all_reviews())
+    print('\n--------------------ALL REVIEWS--------------------')
+    print(restaurant_methods.all_reviews())
+
+    print()
+    print('\n-------------------- RESTAURANT SECTION --------------------')
+    print('-------------------- Restaurant One ------------------------')
+    print(restaurant_methods)
 
     # return all the restaurant instance reviews
-    print('\n-------------------- restaurant_reviews --------------------')
-    print(restaurant1.restaurant_reviews)
+    print("\n-------------------- Restaurant's Review --------------------")
+    print(restaurant_methods.restaurant_reviews())
 
     # return all the customers who have reviewed this restaurant
-    print('\n-------------------- restaurant_customers --------------------')
-    print(restaurant1.restaurant_customers)
+    print("\n-------------------- Restaurant's Customers --------------------")
+    print(restaurant_methods.restaurant_customers())
 
-    print('\n-------------------- fanciest_restaurant() --------------------')
+    print('\n-------------------- Fanciest Restaurant --------------------')
     # returns the fanciest(most-expensive) restaurant of all the restaurants
-    print(restaurant1.fanciest_restaurant())
+    print(restaurant_methods.fanciest_restaurant())
 
+
+
+    
     '''------------------------------------ C U S T O M E R ---------------------------------------------'''
     customer1 = session.query(Customer).first()
+    customer_methods = CustomerMethods(customer1)
+    
+    print()
+    print('\n-------------------- CUSTOMER SECTION --------------------')
+    print('-------------------- Customer One -----------------------')
+    print(customer_methods)
 
-    print('\n-------------------- customer_reviews --------------------')
+    print("\n-------------------- Customer's Reviews --------------------")
     # returns the customer reviews
-    print(customer1.customer_reviews)
+    print(customer_methods.customer_reviews)
 
-    print('\n-------------------- customer_restaurants --------------------')
+    print("\n-------------------- Customer's Reviewed Restaurants --------------------")
     # returns the customer reviews
-    print(customer1.customer_restaurants)
+    print(customer_methods.customer_restaurants)
 
-    print('\n-------------------- full_name --------------------')
+    print("\n-------------------- Customer's Full Name --------------------")
     # return customer full_name
-    print(customer1.full_name)
+    print(customer_methods.full_name)
 
-    print('\n-------------------- favorite_restaurant --------------------')
+    print('\n-------------------- Favorite Restaurant --------------------')
     # return restaurant with the highest review for this customer
-    print(customer1.favorite_restaurant())
+    print(customer_methods.favorite_restaurant)
 
-    print('\n-------------------- add_review() --------------------')
+    print('\n-------------------- Add Review --------------------')
     # add review and return it
-    print(customer1.add_review(restaurant1, 8, "Honey, I'm so high!"))
+    print(customer_methods.add_review(restaurant1, 8))
 
-    print('\n-------------------- delete_reviews() --------------------')
-    # delete reviews that belong to specific restaurants
-    customer1.delete_reviews(restaurant1)
+    # print('\n-------------------- Delete Review --------------------')
+    # # delete reviews that belong to specific restaurants
+    # customer_methods.delete_reviews(restaurant1)
+
+
+
 
     '''----------------------------------- R E V I E W ------------------------------------------------'''
     review1 = session.query(Review).first()
-    print('\n-------------------- review_customer --------------------')
-    # return customer
-    print(review1.review_customer)
+    review_methods = ReviewMethods(review1)
 
-    print('\n-------------------- review_restaurant --------------------')
-    # return customer
-    print(review1.review_restaurant)
+    # print("\n-------------------- Review's Owner(customer) --------------------")
+    # # return customer
+    # print(review_methods.review_customer)
 
-    print('\n-------------------- full_review() --------------------')
+    # print("\n-------------------- Review's Target(restaurant) --------------------")
+    # # return customer
+    # print(review_methods.review_restaurant)
+
+    print('\n-------------------- Full Review --------------------')
     # return full review details
-    print(review1.full_review())
+    print(review_methods.full_review())

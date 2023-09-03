@@ -9,9 +9,14 @@ if __name__ == '__main__':
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
+
+    # Clear existing data
     session.query(Customer).delete()
-    session.query(Review).delete()
     session.query(Restaurant).delete()
+    session.query(Review).delete()
+    session.commit()
+
+
     fake = Faker()
 
     # ------------------------ Populate customer table --------------------------
@@ -22,7 +27,6 @@ if __name__ == '__main__':
             last_name=fake.last_name()
         )
         session.add(customer)
-        session.commit()
         customers.append(customer)
 
 
@@ -30,11 +34,10 @@ if __name__ == '__main__':
     restaurants = []
     for i in range(10):
         restaurant = Restaurant(
-            name=fake.unique.name(),
+            name=fake.company(),
             price=random.randint(4000,10000)
         )
         session.add(restaurant)
-        session.commit()
         restaurants.append(restaurant)
 
     # ------------------------ Populate reviews table ----------------------------
@@ -47,9 +50,8 @@ if __name__ == '__main__':
                 star_rating=random.randint(1, 10),
                 customer_id=customer.id
             )
-            #checks if the current restaurant is not already associated with the customer in order to ensure the customer doesnt review the same restaurant multiple times
-            if restaurant not in customer.restaurants:
-                customer.reviews.append(review)
-                session.commit()
+            customer.reviews.append(review)
+            session.add(review)
 
+    session.commit()
     session.close()
