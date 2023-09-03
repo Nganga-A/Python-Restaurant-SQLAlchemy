@@ -1,20 +1,17 @@
 from faker import Faker
 import random
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-from models import Customer, Restaurant, Review
+from models import Customer, Restaurant, Review, Base
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:///restaurants.db')
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-
     session.query(Customer).delete()
     session.query(Review).delete()
     session.query(Restaurant).delete()
-
     fake = Faker()
 
     # ------------------------ Populate customer table --------------------------
@@ -47,7 +44,6 @@ if __name__ == '__main__':
             customer = random.choice(customers)
             review = Review(
                 restaurant_id=restaurant.id,
-                description=fake.sentence(),
                 star_rating=random.randint(1, 10),
                 customer_id=customer.id
             )

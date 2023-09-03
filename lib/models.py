@@ -1,15 +1,10 @@
 #Lets define the SQLAlchemy models
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, DateTime
-from sqlalchemy.orm import relationship, backref, declarative_base, sessionmaker
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///restaurants.db') #creates a SQLAlchemy engine that connects to our db
-Session = sessionmaker(bind=engine) #creates a Session class to interact with the database and is bound to the engine you created
-session = Session()
-Base = declarative_base()
 # base class for declarative models
 Base = declarative_base()
-
 
 class Restaurant(Base):
     __tablename__ = 'restaurants'
@@ -19,6 +14,9 @@ class Restaurant(Base):
     reviews = relationship('Review', back_populates='restaurant')    #one-to-many relationship between a restaurant and its reviews
     customers = relationship('Customer', secondary='reviews', back_populates='restaurants') #many-to-many relationship between a restaurants and its customers
     #reviews serving as a secondary association table.
+    def __repr__(self):
+        return f'{self.name} Restaurant - Price: ${self.price}.00'
+
 
 
 class Review(Base):
@@ -30,11 +28,18 @@ class Review(Base):
     restaurant = relationship('Restaurant', back_populates='reviews') #one-to-many relationship between restaurant and reviews
     customer = relationship('Customer', back_populates='reviews') #one-to-many relationship between customer and reviews
 
+    def __repr__(self):
+        return f"Review for {self.restaurant.name} by {self.customer.full_name()}: {self.star_rating} stars."
+
+
 
 class Customer(Base):
     __tablename__ = 'customers'
     id = Column(Integer, primary_key=True)  
     first_name = Column(String)              
     last_name = Column(String)              
-    reviews = relationship('Review', back_populates='customer')
-    restaurants = relationship('Restaurant', secondary='reviews', back_populates='customers')
+    restaurants = relationship("Restaurant", secondary='reviews', back_populates='customers')
+    
+    def __repr__(self):
+        return f'{self.id}: {self.last_name}, {self.first_name}'
+
