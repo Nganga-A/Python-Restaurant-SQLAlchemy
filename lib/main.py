@@ -20,12 +20,12 @@ if __name__ == '__main__':
     restaurant_methods = RestaurantMethods(restaurant1)
 
     # return details of all the restaurant instance reviews
-    print('\n--------------------ALL REVIEWS--------------------')
+    print('\n-------------------------ALL REVIEWS-------------------------')
     print(restaurant_methods.all_reviews())
 
     print()
-    print('\n-------------------- RESTAURANT SECTION --------------------')
-    print('-------------------- Restaurant One ------------------------')
+    print('\n------------------------- RESTAURANT SECTION ------------------------')
+    print('------------------------- Restaurant One -----------------------------')
     print(restaurant_methods)
 
     # return all the restaurant instance reviews
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     print("\n-------------------- Restaurant's Customers --------------------")
     print(restaurant_methods.restaurant_customers())
 
-    print('\n-------------------- Fanciest Restaurant --------------------')
+    print('\n------------------------- Fanciest Restaurant -------------------------')
     # returns the fanciest(most-expensive) restaurant of all the restaurants
     print(restaurant_methods.fanciest_restaurant())
 
@@ -48,11 +48,11 @@ if __name__ == '__main__':
     customer_methods = CustomerMethods(customer1)
     
     print()
-    print('\n-------------------- CUSTOMER SECTION --------------------')
-    print('-------------------- Customer One -----------------------')
+    print('\n------------------------- CUSTOMER SECTION ------------------------')
+    print('------------------------ Customer One ---------------------------')
     print(customer_methods)
 
-    print("\n-------------------- Customer's Reviews --------------------")
+    print("\n------------------------ Customer's Reviews ------------------------")
     # returns the customer reviews
     print(customer_methods.customer_reviews)
 
@@ -60,21 +60,21 @@ if __name__ == '__main__':
     # returns the customer reviews
     print(customer_methods.customer_restaurants)
 
-    print("\n-------------------- Customer's Full Name --------------------")
+    print("\n-------------------------- Customer's Full Name -------------------------")
     # return customer full_name
     print(customer_methods.full_name)
 
-    print('\n-------------------- Favorite Restaurant --------------------')
+    print('\n------------------------- Favorite Restaurant -------------------------')
     # return restaurant with the highest review for this customer
     print(customer_methods.favorite_restaurant)
 
-    print('\n-------------------- Add Review --------------------')
+    print('\n------------------------------ Add Review -----------------------------')
     # add review and return it
     print(customer_methods.add_review(restaurant1, 8))
 
-    # print('\n-------------------- Delete Review --------------------')
-    # # delete reviews that belong to specific restaurants
-    # customer_methods.delete_reviews(restaurant1)
+    print('\n-------------------------- Delete Review ----------------------------')
+    # delete reviews that belong to specific restaurants
+    customer_methods.delete_reviews(restaurant1)
 
 
 
@@ -84,8 +84,8 @@ if __name__ == '__main__':
     review_methods = ReviewMethods(review1)
 
     print()
-    print('\n-------------------- Review SECTION --------------------')
-    print('-------------------- Review One ------------------------')
+    print('\n------------------------ Review SECTION ------------------------')
+    print('------------------------ Review One ----------------------------')
     print(review_methods)
 
     print("\n-------------------- Review's Owner(customer) --------------------")
