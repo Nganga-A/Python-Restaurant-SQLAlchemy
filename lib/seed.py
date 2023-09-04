@@ -27,6 +27,7 @@ if __name__ == '__main__':
             last_name=fake.last_name()
         )
         session.add(customer)
+        session.commit()
         customers.append(customer)
 
 
@@ -34,10 +35,11 @@ if __name__ == '__main__':
     restaurants = []
     for i in range(10):
         restaurant = Restaurant(
-            name=fake.company(),
+            name=fake.city(),
             price=random.randint(4000,10000)
         )
         session.add(restaurant)
+        session.commit()
         restaurants.append(restaurant)
 
     # ------------------------ Populate reviews table ----------------------------
@@ -50,7 +52,7 @@ if __name__ == '__main__':
                 star_rating=random.randint(1, 10),
                 customer_id=customer.id
             )
-            customer.reviews.append(review)
+            customer.reviews.append(review) #Associate the customer with the appended review
             session.add(review)
 
     session.commit()

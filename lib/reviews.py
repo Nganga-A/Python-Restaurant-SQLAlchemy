@@ -6,7 +6,7 @@ class ReviewMethods:
 
     # represent the class instances
     def __repr__(self):
-        return (f"Customer({self.review.customer}) | Restaurant({self.review.restaurant}) | star-rating({self.review} stars) |")
+        return (f" {self.review}")
 
     def review_customer_name(self):
         return self.review.customer.full_name
@@ -16,11 +16,13 @@ class ReviewMethods:
 
     def review_customer(self):
         # Return the Customer instance for this review
-        return self.customer
+        customer_name = f"{self.review.customer.first_name} {self.review.customer.last_name}"
+        return customer_name
 
     def review_restaurant(self):
         # Return the Restaurant instance for this review
-        return self.restaurant
+        return self.review.restaurant
 
     def full_review(self):
-        return f"Review for {self.review.restaurant.name} Restaurant by {self.review.customer.full_name}: {self.review.star_rating} stars."
+        customer_name = f"{self.review.customer.first_name} {self.review.customer.last_name}"
+        return f"Review for {self.review.restaurant} Restaurant by {customer_name}: {self.review.star_rating} stars"

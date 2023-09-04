@@ -83,14 +83,19 @@ if __name__ == '__main__':
     review1 = session.query(Review).first()
     review_methods = ReviewMethods(review1)
 
-    # print("\n-------------------- Review's Owner(customer) --------------------")
-    # # return customer
-    # print(review_methods.review_customer)
+    print()
+    print('\n-------------------- Review SECTION --------------------')
+    print('-------------------- Review One ------------------------')
+    print(review_methods)
 
-    # print("\n-------------------- Review's Target(restaurant) --------------------")
-    # # return customer
-    # print(review_methods.review_restaurant)
+    print("\n-------------------- Review's Owner(customer) --------------------")
+    # return customer
+    print(review_methods.review_customer())
 
-    print('\n-------------------- Full Review --------------------')
+    print("\n-------------------- Review's Target(restaurant) --------------------")
+    # return restaurant
+    print(review_methods.review_restaurant())
+
+    print('\n--------------------------- Full Review ---------------------------')
     # return full review details
     print(review_methods.full_review())

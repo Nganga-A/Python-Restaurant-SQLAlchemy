@@ -12,7 +12,7 @@ class CustomerMethods:
     def customer_reviews(self):
         # Return a collection of all the reviews that the Customer has left
         customer = self.customer
-        reviews = customer.reviews
+        reviews = self.customer.reviews
         formatted_reviews = []
 
         for review in reviews:
@@ -29,11 +29,21 @@ class CustomerMethods:
     @property
     def customer_restaurants(self):
         # Return a collection of all the restaurants that the Customer has reviewed
-        return self.customer.restaurants
+        reviewed_restaurants = self.customer.restaurants
+        if not reviewed_restaurants:
+            return "No reviewed restaurant"
+        formatted_restaurants = [
+            f"{restaurant.name} - Price: ${restaurant.price:.2f}"
+            for restaurant in reviewed_restaurants           
+        ]
+        formatted_restaurants_string = "\n".join(formatted_restaurants)
+        return formatted_restaurants_string
+
+
 
     @property
     def full_name(self):
-        # Return the full name of the customer, with the first name and last name concatenated, Western style
+        # Return the full name of the customer, with the first name and last name concatenated
         return f"{self.customer.first_name} {self.customer.last_name}"
 
     @property
