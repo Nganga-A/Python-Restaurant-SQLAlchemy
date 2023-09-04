@@ -14,8 +14,11 @@ This project is a Python-based application for managing restaurant reviews. It u
 
 ## Topics
 -SQLAlchemy Migrations
+
 -SQLAlchemy Relationships
+
 -Class and Instance Methods
+
 -SQLAlchemy Querying
 
 ## Project Composition
